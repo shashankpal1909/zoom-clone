@@ -9,6 +9,7 @@ import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
 
 import HomeCard from "./HomeCard";
 import MeetingModal from "./MeetingModal";
+import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { useToast } from "./ui/use-toast";
 
@@ -80,7 +81,7 @@ const MeetingTypeList = () => {
         className="bg-orange-1"
       />
       <HomeCard
-        img="/icons/add-meeting.svg"
+        img="/icons/join-meeting.svg"
         title="Join Meeting"
         description="via invitation link"
         handleClick={() => setMeetingState("isJoiningMeeting")}
@@ -158,6 +159,20 @@ const MeetingTypeList = () => {
         buttonText="Start Meeting"
         handleClick={() => createMeeting()}
       />
+      <MeetingModal
+        isOpen={meetingState === "isJoiningMeeting"}
+        onClose={() => setMeetingState(undefined)}
+        className="text-center"
+        title="Meeting link"
+        buttonText="Join Meeting"
+        handleClick={() => router.push(values.link)}
+      >
+        <Input
+          placeholder="meeting link"
+          className="border-none bg-dark-3 focus-visible:ring-0  focus-visible:ring-offset-0"
+          onChange={(e) => setValues({ ...values, link: e.target.value })}
+        />
+      </MeetingModal>
     </section>
   );
 };
